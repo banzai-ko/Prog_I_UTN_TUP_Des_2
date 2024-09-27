@@ -20,5 +20,5 @@
 #     utn_mostrar_heroes_mas_debiles
 # )
 from .funciones import *
-from .auxiliares import play_sound, limpiar_pantalla, calcular_promedio, mostrar_lista, obtener_mayor
+from .auxiliares import calcular_promedio, mostrar_lista, obtener_mayor
 from .salida_consola import mostrar_menu

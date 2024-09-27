@@ -8,6 +8,35 @@ from funciones_utn.auxiliares import (
     ordenar_descendente_altura,
     ordenar_poder_usuario
 )
+
+
+def mostrar_todo(matriz: list[list]) -> None:
+    """_summary_
+    Mostrar toda la informacion de los heroes
+    """
+    columnas = len(matriz[0])
+    filas = len(matriz)
+    for indice in range(columnas):
+        texto = ''
+
+        for sub_indice in range(filas):
+            if type(matriz[sub_indice][indice]) == str:
+                if len(matriz[sub_indice][indice]) > 20:
+                    texto_original = matriz[sub_indice][indice]
+                    texto_saneado = texto_original[0:20]
+                    texto += f'{texto_saneado} | '
+                else:
+                    texto += f'{matriz[sub_indice][indice]:20} | '
+            elif type(matriz[sub_indice][indice]) == int:
+                texto += f'{matriz[sub_indice][indice]:03} | '
+            elif type(matriz[sub_indice][indice]) == float:
+                texto += f'{matriz[sub_indice][indice]:08.2f} | '
+        texto = texto[0:-3]
+
+        print(texto)
+
+
+# ____________
 #     utn_filtrar_heroes_genero, utn_mostrar_heroe_mayor_altura,
 #     utn_mostrar_heroes_mas_fuertes, utn_mostrar_identidades_heroes,
 #     utn_mostrar_nombres_heroes, utn_mostrar_heroes_poder_superior_promedio,
@@ -41,6 +70,7 @@ def utn_mostrar_heroes_poder_superior_promedio(lista_nombres, lista_identidades,
             print(mostrar_super_heroes(i, lista_nombres, lista_identidades,
                   lista_alturas, lista_poderes, lista_generos))
 
+
 def utn_mostrar_heroes_mas_debiles(lista: list[list]):
     pass
 
@@ -54,6 +84,7 @@ def utn_mostrar_heroes_poder_ascendente(lista_nombres, lista_identidades, lista_
         lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos)
     mostrar_todos(lista_ordenada)
 
+
 def utn_mostrar_heroes_altura_descendente(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos):
     lista_mas_grandes = [[], [], [], [], []]
     lista_mas_chicos = [[], [], [], [], []]
@@ -61,13 +92,15 @@ def utn_mostrar_heroes_altura_descendente(lista_nombres, lista_identidades, list
         [lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos], lista_mas_grandes, lista_mas_chicos)
     mostrar_todos(lista_ordenada)
 
+
 def utn_mostrar_heroes_poder_usuario(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos):
     seleccion_usuario = input('Ingrese ASC o DES: ')
     while seleccion_usuario != 'ASC' and seleccion_usuario != 'DES':
-        seleccion_usuario = input('Ingrese ASC o DES: ') #mejorar en funcion de validacion
+        # mejorar en funcion de validacion
+        seleccion_usuario = input('Ingrese ASC o DES: ')
 
     lista_ordenada = ordenar_poder_usuario(
         lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos, seleccion_usuario
-    )    
+    )
     mostrar_todos(lista_ordenada)
     pass

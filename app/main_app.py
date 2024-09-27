@@ -1,24 +1,25 @@
+"""_summary_
+Desafio 02 GP UTN APP
+"""
+from UTN_Heroes_Dataset.utn_funciones import (
+    clear_console, play_sound
+)
 from funciones_utn import (
     mostrar_menu,
-    play_sound,
-    limpiar_pantalla
 
 )
 from validaciones import (
     validar_opcion
 )
 from funciones_utn import (
-    utn_mostrar_nombres_heroes,
-    utn_mostrar_identidades_heroes,
-    utn_mostrar_heroe_mayor_altura,
-    utn_filtrar_heroes_genero,
-    utn_mostrar_heroes_poder_superior_promedio,
-    utn_mostrar_heroes_poder_ascendente,
-    utn_mostrar_heroes_altura_descendente,
-    utn_mostrar_heroes_poder_usuario
+    mostrar_todos
 )
 
-def utn_heroes_app(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos):
+
+def desafio2(matriz_heroes):
+    """_summary_
+    Funcion Bucle Principla App
+    """
 
     while True:
         mostrar_menu()
@@ -26,33 +27,44 @@ def utn_heroes_app(lista_nombres, lista_identidades, lista_alturas, lista_podere
         play_sound()
         match opcion:
             case 1:
-                utn_mostrar_nombres_heroes(lista_nombres)
+                mostrar_todos(matriz_heroes)
+                # mostrar_cantidad_de_heroes_fem(matriz_heroes)
             case 2:
-                utn_mostrar_identidades_heroes(lista_identidades) 
+                # mostrar_cantidad_de_heroes_masc(matriz_heroes)
+                pass
             case 3:
-                utn_mostrar_heroe_mayor_altura(lista_alturas, lista_nombres)
+                # mostrar_heroes_poder_mayor_75(matriz_heroes)
+                pass
             case 4:
+                # mostrar_heroes_altura_mayor_160(matriz_heroes)
                 pass
             case 5:
-                utn_filtrar_heroes_genero(lista_generos, lista_nombres)
+                # filtrar_heroes_masc_poder_menor_60(matriz_heroes)
+                pass
             case 6:
-                utn_filtrar_heroes_genero(lista_generos, lista_nombres, "Masculino")
+                # fitrar_heroes_no_binarios_poder_10_50(matriz_heroes)
+                pass
             case 7:
-                utn_filtrar_heroes_genero(lista_generos, lista_nombres, 'No-Binario')
+                # determinar_poder_minimo_mostrar_heroes(matriz_heroes)
+                pass
             case 8:
-                utn_mostrar_heroes_poder_superior_promedio(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos)
+                # determinar_altura_maxima_mostrar_heroes(matriz_heroes)
+                pass
             case 9:
                 pass
             case 10:
-                utn_mostrar_heroes_poder_ascendente(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos)
+                # ordenar_heroes_alfabeticamente_ascendente(matriz_heroes)
+                pass
             case 11:
-               utn_mostrar_heroes_altura_descendente(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos)
+                # ordenar_heroes_alfabeticamente_descendente(matriz_heroes)
+                pass
             case 12:
-                utn_mostrar_heroes_poder_usuario(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos)
+                # mostrar_heroes_mas_fuertes(matriz_heroes)
+                pass
             case 13:
                 print("Saliendo...")
                 break
             case _:
                 print('Opcion no valida')
 
-        limpiar_pantalla()
+        clear_console()
