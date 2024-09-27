@@ -1,12 +1,11 @@
-"""_summary_
-    Modulo Mostrar menu de la aplicacion
-    """
-
+"""
+Modulo Mostrar menu de la aplicacion
+"""
 
 def mostrar_menu():
     """
-    Muestra por pantalla el menu estático
-    """
+     Muestra por pantalla el menu estático
+     """
     opciones = \
         """
         1 - Mostrar la cantidad de Heroes Femeninos.
