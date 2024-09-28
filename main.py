@@ -1,5 +1,7 @@
 """_summary_
-Desafio 02 Grupo 02
+UTN FRA 
+Programacion I
+Desafio 02 Grupo 03
 Perez, Renato
 Pennone, Genaro
 """

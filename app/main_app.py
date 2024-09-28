@@ -1,5 +1,5 @@
 """_summary_
-Desafio 02 GP UTN APP
+Desafio 02 Prog I UTN APP
 """
 from UTN_Heroes_Dataset.utn_funciones import (
     clear_console, play_sound
