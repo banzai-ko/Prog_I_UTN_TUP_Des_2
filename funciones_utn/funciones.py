@@ -1,10 +1,9 @@
 from funciones_utn.auxiliares import (
+    mostrar_sublista,
+    filtrar,
     calcular_promedio,
-    mostrar_lista,
-    mostrar_super_heroes,
     obtener_mayor,
     ordenar_ascendente_poder,
-    mostrar_todos,
     ordenar_descendente_altura,
     ordenar_poder_usuario
 )
@@ -16,9 +15,9 @@ def mostrar_todo(matriz: list[list]) -> None:
     """
     columnas = len(matriz[0])
     filas = len(matriz)
+
     for indice in range(columnas):
         texto = ''
-
         for sub_indice in range(filas):
             if type(matriz[sub_indice][indice]) == str:
                 if len(matriz[sub_indice][indice]) > 20:
@@ -36,6 +35,11 @@ def mostrar_todo(matriz: list[list]) -> None:
         print(texto)
 
 
+def mostrar_cantidad_de_heroes_fem(matriz: list[list]) -> None:
+    mostrar_sublista(filtrar(matriz, 'genero', 'Femenino'), matriz)
+
+def mostrar_cantidad_de_heroes_masc(matriz: list[list]) -> None:
+    mostrar_sublista(filtrar(matriz, 'genero', 'Masculino'), matriz)
 # ____________
 #     utn_filtrar_heroes_genero, utn_mostrar_heroe_mayor_altura,
 #     utn_mostrar_heroes_mas_fuertes, utn_mostrar_identidades_heroes,
@@ -54,13 +58,6 @@ def utn_mostrar_heroe_mayor_altura(lista: list, lista_nombres_heroes: list) -> N
     print(f'El heroe con mayor altura es: {
           lista_nombres_heroes[pos]}, con {lista[pos]}cm de altura')
 
-
-def utn_mostrar_identidades_heroes(lista_identidades: list):
-    mostrar_lista(lista_identidades)
-
-
-def utn_mostrar_nombres_heroes(lista_nombres: list):
-    mostrar_lista(lista_nombres)
 
 
 def utn_mostrar_heroes_poder_superior_promedio(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos):

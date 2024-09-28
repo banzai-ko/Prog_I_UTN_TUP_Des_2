@@ -1,10 +1,71 @@
-"""_summary_
-Funciones auxiliares y soporte Desafio 02 App
-"""
-def mostrar_lista(lista: list) -> None:
-    for i in range(len(lista)):
-        print(lista[i])
+# pylint: disable=C0200
+# pylint: disable=C0123
 
+"""_summary_
+Funciones auxiliares y soporte Desafio 03 App
+"""
+
+
+def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
+    """
+    Muestra elementos filtrados previamente
+    Arguments:
+        indices -- Elementos a ser mostrados (índices)
+        lista_para_mostrar -- Lista total (lista de listas)
+    """
+    texto = ''
+    for i in range(len(indices)):
+        for j in range(len(lista_para_mostrar)):
+            if type(lista_para_mostrar[j][indices[i]]) == str:
+                if len(lista_para_mostrar[j][indices[i]]) > 20:
+                    texto_original = lista_para_mostrar[j][indices[i]]
+                    texto_saneado = texto_original[0:20]
+                    texto += f'{texto_saneado} | '
+                else:
+                    texto += f'{lista_para_mostrar[j][indices[i]]:20} | '
+            elif type(lista_para_mostrar[j][indices[i]]) == int:
+                texto += f'{lista_para_mostrar[j][indices[i]]:03} | '
+            elif type(lista_para_mostrar[j][indices[i]]) == float:
+                texto += f'{lista_para_mostrar[j][indices[i]]:08.2f} | '
+        texto = texto[:-3]
+        print(texto)
+        texto = ''
+
+def filtrar(matriz: list[list], tipo: str, valor: str) -> list:
+    """
+    _summary_
+    Funcion de filtrado, busqueda por valor
+    Arguments:
+        matriz -- Dataset
+        tipo -- Lista en la cual buscar: Nombre, Identidad, Apodo, Genero, Poder, Altura
+        valor -- el campo a buscar
+
+    Returns:
+        _description_ Lista de resultados, como indice de la lista dataset
+    """
+    res = []
+    lista = tipo.lower()
+    for i in range(len(matriz[0])):
+        if lista == 'nombre':
+            if lista == matriz[0][i]:
+                res.append(i)
+        elif lista == 'identidad':
+            if valor == matriz[1][i]:
+                res.append(i)
+        elif lista == 'apodo':
+            if valor == matriz[2][i]:
+                res.append(i)
+        elif lista == 'genero':
+            if valor == matriz[3][i]:
+                res.append(i)
+        elif lista == 'poder':
+            if valor == str(matriz[4][i]):
+                res.append(i)
+        elif lista == 'altura':
+            if valor == str(matriz[5][i]):
+                res.append(i)
+
+    return res
 
 def calcular_promedio(lista: list) -> float:
     sumatoria = 0
@@ -14,25 +75,18 @@ def calcular_promedio(lista: list) -> float:
     return promedio
 
 
-def mostrar_super_heroes(indice: int, lista_nombres: list, lista_identidades: list, lista_alturas: list, lista_poderes: list, lista_generos: list) -> str:
-    mensaje = f'Nombre: {lista_nombres[indice]:<16} | Poder: {lista_poderes[indice]:<12} ' \
-              f'| Altura: {lista_alturas[indice]:<12} | Genero: {lista_generos[indice]:<12} ' \
-              f'| Identidad: {lista_identidades[indice]:<22}'
-    return mensaje
+def obtener_mayor(lista: list, i=None) -> int:
+    if i is None:
+        i = len(lista) - 1
 
-
-def obtener_mayor(lista: list, indice=None) -> int:
-    if indice is None:
-        indice = len(lista) - 1
-
-    if indice == 0:  # Caso Base
+    if i == 0:  # Caso Base
         return 0
 
-    indice_mayor = obtener_mayor(lista, indice - 1)  # Caso recursivo
+    indice_mayor = obtener_mayor(lista, i - 1)  # Caso recursivo
 
     # Comparar el valor en el índice actual con el valor almacenado
-    if lista[indice] > lista[indice_mayor]:
-        return indice
+    if lista[i] > lista[indice_mayor]:
+        return i
     else:
         return indice_mayor
     lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos
@@ -40,14 +94,14 @@ def obtener_mayor(lista: list, indice=None) -> int:
 
 def ordenar_ascendente_poder(lista_nombres: list, lista_identidades: list, lista_alturas: list, lista_poderes: list, lista_generos: list) -> list[list]:
     # BS
-    for indice in range(len(lista_poderes) - 1):
-        for sub_indice in range(indice + 1, len(lista_poderes)):
-            if lista_poderes[indice] > lista_poderes[sub_indice]:
-                ordenar_listas(indice, sub_indice, lista_poderes)
-                ordenar_listas(indice, sub_indice, lista_nombres)
-                ordenar_listas(indice, sub_indice, lista_identidades)
-                ordenar_listas(indice, sub_indice, lista_alturas)
-                ordenar_listas(indice, sub_indice, lista_generos)
+    for i in range(len(lista_poderes) - 1):
+        for j in range(i + 1, len(lista_poderes)):
+            if lista_poderes[i] > lista_poderes[j]:
+                ordenar_listas(i, j, lista_poderes)
+                ordenar_listas(i, j, lista_nombres)
+                ordenar_listas(i, j, lista_identidades)
+                ordenar_listas(i, j, lista_alturas)
+                ordenar_listas(i, j, lista_generos)
 
     lista_resultado = [lista_nombres, lista_identidades,
                        lista_alturas, lista_poderes, lista_generos]
@@ -57,8 +111,8 @@ def ordenar_ascendente_poder(lista_nombres: list, lista_identidades: list, lista
 
 def ordenar_descendente_altura(lista_resultado: list[list], lista_mas_grandes: list[list], lista_mas_chicos: list[list]) -> list[list]:
     """
-    Ordena los elementos de la matriz usando QS
-    Argumentos: Recibe una matriz y dos parametros auxiliares para la recursividad( ver/preguntar posible mejora)
+    Ordena los elementos de la lista_para_mostrar usando QS
+    Argumentos: Recibe una lista_para_mostrar y dos parametros auxiliares para la recursividad( ver/preguntar posible mejora)
     """
     if len(lista_resultado[2]) < 2:
         return lista_resultado
@@ -68,15 +122,17 @@ def ordenar_descendente_altura(lista_resultado: list[list], lista_mas_grandes: l
 
     for i in range(pivot_index):
         altura = lista_resultado[2][i]
-        if altura > pivot_altura: 
+        if altura > pivot_altura:
             for j in range(5):
                 lista_mas_grandes[j].append(lista_resultado[j][i])
-        else:  
+        else:
             for j in range(5):
                 lista_mas_chicos[j].append(lista_resultado[j][i])
 
-    sorted_grandes = ordenar_descendente_altura(lista_mas_grandes, [[], [], [], [], []], [[], [], [], [], []])
-    sorted_chicos = ordenar_descendente_altura(lista_mas_chicos, [[], [], [], [], []], [[], [], [], [], []])
+    sorted_grandes = ordenar_descendente_altura(
+        lista_mas_grandes, [[], [], [], [], []], [[], [], [], [], []])
+    sorted_chicos = ordenar_descendente_altura(
+        lista_mas_chicos, [[], [], [], [], []], [[], [], [], [], []])
 
     pivot = [lista_resultado[j][pivot_index] for j in range(5)]
 
@@ -90,35 +146,31 @@ def ordenar_descendente_altura(lista_resultado: list[list], lista_mas_grandes: l
 
     return fix_sorted
 
-def ordenar_listas(indice: int, sub_indice: int, lista_orden: list) -> list:
-    lista_orden[indice], lista_orden[sub_indice] =\
-        lista_orden[sub_indice], lista_orden[indice]
+
+def ordenar_listas(i: int, j: int, lista_orden: list) -> list:
+    lista_orden[i], lista_orden[j] =\
+        lista_orden[j], lista_orden[i]
 
     return lista_orden
 
 
 def ordenar_poder_usuario(lista_nombres: list, lista_identidades: list, lista_alturas: list, lista_poderes: list, lista_generos: list, modo: str) -> list[list]:
     # Selection Sort
-    for indice in range(len(lista_poderes) - 1):
-        indice_minimo = indice
-        for sub_indice in range(indice + 1, len(lista_poderes)):
-            if (modo == 'ASC' and lista_poderes[sub_indice] < lista_poderes[indice_minimo]) or \
-               (modo == 'DES' and lista_poderes[sub_indice] > lista_poderes[indice_minimo]):
-                indice_minimo = sub_indice
+    for i in range(len(lista_poderes) - 1):
+        indice_minimo = i
+        for j in range(i + 1, len(lista_poderes)):
+            if (modo == 'ASC' and lista_poderes[j] < lista_poderes[indice_minimo]) or \
+               (modo == 'DES' and lista_poderes[j] > lista_poderes[indice_minimo]):
+                indice_minimo = j
 
-        if indice_minimo != indice:
-            ordenar_listas(indice, indice_minimo, lista_poderes)
-            ordenar_listas(indice, indice_minimo, lista_nombres)
-            ordenar_listas(indice, indice_minimo, lista_identidades)
-            ordenar_listas(indice, indice_minimo, lista_alturas)
-            ordenar_listas(indice, indice_minimo, lista_generos)
+        if indice_minimo != i:
+            ordenar_listas(i, indice_minimo, lista_poderes)
+            ordenar_listas(i, indice_minimo, lista_nombres)
+            ordenar_listas(i, indice_minimo, lista_identidades)
+            ordenar_listas(i, indice_minimo, lista_alturas)
+            ordenar_listas(i, indice_minimo, lista_generos)
 
     lista_resultado = [lista_nombres, lista_identidades,
                        lista_alturas, lista_poderes, lista_generos]
-    
-    return lista_resultado
 
-def mostrar_todos(lista: list[list]):
-    for i in range(len(lista[0])):
-        print(mostrar_super_heroes(
-            i, lista[0], lista[1], lista[2], lista[3], lista[4]))
+    return lista_resultado

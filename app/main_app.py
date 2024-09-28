@@ -1,20 +1,19 @@
 """_summary_
-Desafio 02 Prog I UTN APP
+Desafio 02 Prog I
+
+ UTN APP
 """
 from UTN_Heroes_Dataset.utn_funciones import (
     clear_console, play_sound
-)
-from funciones_utn import (
-    mostrar_menu,
-
 )
 from validaciones import (
     validar_opcion
 )
 from funciones_utn import (
-    mostrar_todos
+    mostrar_menu,
+    mostrar_cantidad_de_heroes_fem,
+    mostrar_cantidad_de_heroes_masc,
 )
-
 
 def desafio2(matriz_heroes):
     """_summary_
@@ -27,11 +26,9 @@ def desafio2(matriz_heroes):
         play_sound()
         match opcion:
             case 1:
-                mostrar_todos(matriz_heroes)
-                # mostrar_cantidad_de_heroes_fem(matriz_heroes)
+                mostrar_cantidad_de_heroes_fem(matriz_heroes)
             case 2:
-                # mostrar_cantidad_de_heroes_masc(matriz_heroes)
-                pass
+                mostrar_cantidad_de_heroes_masc(matriz_heroes)
             case 3:
                 # mostrar_heroes_poder_mayor_75(matriz_heroes)
                 pass
