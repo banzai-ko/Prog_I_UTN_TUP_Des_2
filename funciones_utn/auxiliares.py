@@ -5,6 +5,30 @@
 Funciones auxiliares y soporte Desafio 03 App
 """
 
+def mostrar_todo(matriz: list[list]) -> None:
+    """_summary_
+    Mostrar toda la informacion de los heroes
+    """
+    columnas = len(matriz[0])
+    filas = len(matriz)
+
+    for indice in range(columnas):
+        texto = ''
+        for sub_indice in range(filas):
+            if type(matriz[sub_indice][indice]) == str:
+                if len(matriz[sub_indice][indice]) > 20:
+                    texto_original = matriz[sub_indice][indice]
+                    texto_saneado = texto_original[0:20]
+                    texto += f'{texto_saneado} | '
+                else:
+                    texto += f'{matriz[sub_indice][indice]:20} | '
+            elif type(matriz[sub_indice][indice]) == int:
+                texto += f'{matriz[sub_indice][indice]:03} | '
+            elif type(matriz[sub_indice][indice]) == float:
+                texto += f'{matriz[sub_indice][indice]:08.2f} | '
+        texto = texto[0:-3]
+
+        print(texto)
 
 def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
     """
@@ -30,6 +54,7 @@ def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
         texto = texto[:-3]
         print(texto)
         texto = ''
+
 
 def filtrar(matriz: list[list], tipo: str, valor: str) -> list:
     """
@@ -66,6 +91,47 @@ def filtrar(matriz: list[list], tipo: str, valor: str) -> list:
                 res.append(i)
 
     return res
+
+def ordenar_heroes_alfa(matriz: list[list], modo: str, lista: list) -> list[list]:
+    """
+    _summary_
+    Ordenar los elementos alfabeticamente
+    Arguments:
+        matriz -- Dataset
+        modo -- 'ASC' / 'DES', Ascendente o Descendente 
+        lista -- la lista por la cual ordenar
+
+    Returns:
+        _description_
+    """
+
+    lista_nombres, lista_identidades, lista_apodos, \
+    lista_generos, lista_alturas, lista_poderes,  = matriz
+   # Selection Sort
+    for i in range(len(lista) - 1):
+        indice_minimo = i
+        for j in range(i + 1, len(lista)):
+            if (modo == 'ASC' and lista[j] < lista[indice_minimo]) or \
+                (modo == 'DES' and lista[j] > lista[indice_minimo]):
+                indice_minimo = j
+
+        if indice_minimo != i:
+            ordenar_listas(i, indice_minimo, lista_nombres)
+            ordenar_listas(i, indice_minimo, lista_identidades)
+            ordenar_listas(i, indice_minimo, lista_apodos)
+            ordenar_listas(i, indice_minimo, lista_generos)
+            ordenar_listas(i, indice_minimo, lista_poderes)
+            ordenar_listas(i, indice_minimo, lista_alturas)
+
+    lista_resultado = [
+        lista_nombres, lista_identidades, lista_apodos,
+        lista_generos, lista_poderes, lista_alturas
+    ]
+    return lista_resultado
+
+
+# -------------------------------------------
+# Desafio 1. TO DO: CLEAN
 
 def calcular_promedio(lista: list) -> float:
     sumatoria = 0
@@ -154,7 +220,9 @@ def ordenar_listas(i: int, j: int, lista_orden: list) -> list:
     return lista_orden
 
 
-def ordenar_poder_usuario(lista_nombres: list, lista_identidades: list, lista_alturas: list, lista_poderes: list, lista_generos: list, modo: str) -> list[list]:
+def ordenar_poder_usuario(matriz: list[list], modo: str) -> list[list]:
+    lista_nombres, lista_identidades, lista_apodos, \
+        lista_generos, lista_alturas, lista_poderes,  = matriz
     # Selection Sort
     for i in range(len(lista_poderes) - 1):
         indice_minimo = i
@@ -164,13 +232,19 @@ def ordenar_poder_usuario(lista_nombres: list, lista_identidades: list, lista_al
                 indice_minimo = j
 
         if indice_minimo != i:
-            ordenar_listas(i, indice_minimo, lista_poderes)
             ordenar_listas(i, indice_minimo, lista_nombres)
             ordenar_listas(i, indice_minimo, lista_identidades)
-            ordenar_listas(i, indice_minimo, lista_alturas)
+            ordenar_listas(i, indice_minimo, lista_apodos)
             ordenar_listas(i, indice_minimo, lista_generos)
+            ordenar_listas(i, indice_minimo, lista_poderes)
+            ordenar_listas(i, indice_minimo, lista_alturas)
 
-    lista_resultado = [lista_nombres, lista_identidades,
-                       lista_alturas, lista_poderes, lista_generos]
+    lista_resultado = [
+        lista_nombres, lista_identidades, lista_apodos,
+        lista_generos, lista_poderes, lista_alturas
+    ]
 
     return lista_resultado
+
+
+

@@ -13,6 +13,9 @@ from funciones_utn import (
     mostrar_menu,
     mostrar_cantidad_de_heroes_fem,
     mostrar_cantidad_de_heroes_masc,
+    ordenar_heroes_alfabeticamente_ascendente,
+    ordenar_heroes_alfabeticamente_descendente,
+    
 )
 
 def desafio2(matriz_heroes):
@@ -50,11 +53,9 @@ def desafio2(matriz_heroes):
             case 9:
                 pass
             case 10:
-                # ordenar_heroes_alfabeticamente_ascendente(matriz_heroes)
-                pass
+                ordenar_heroes_alfabeticamente_ascendente(matriz_heroes)
             case 11:
-                # ordenar_heroes_alfabeticamente_descendente(matriz_heroes)
-                pass
+                ordenar_heroes_alfabeticamente_descendente(matriz_heroes)
             case 12:
                 # mostrar_heroes_mas_fuertes(matriz_heroes)
                 pass

@@ -1,50 +1,70 @@
+"""
+_summary_ Moudulo de funciones UTN Industries
+    """
+
 from funciones_utn.auxiliares import (
-    mostrar_sublista,
+    mostrar_todo,
     filtrar,
+    ordenar_heroes_alfa,
     calcular_promedio,
     obtener_mayor,
     ordenar_ascendente_poder,
     ordenar_descendente_altura,
-    ordenar_poder_usuario
+    ordenar_poder_usuario,
 )
 
 
-def mostrar_todo(matriz: list[list]) -> None:
-    """_summary_
-    Mostrar toda la informacion de los heroes
-    """
-    columnas = len(matriz[0])
-    filas = len(matriz)
-
-    for indice in range(columnas):
-        texto = ''
-        for sub_indice in range(filas):
-            if type(matriz[sub_indice][indice]) == str:
-                if len(matriz[sub_indice][indice]) > 20:
-                    texto_original = matriz[sub_indice][indice]
-                    texto_saneado = texto_original[0:20]
-                    texto += f'{texto_saneado} | '
-                else:
-                    texto += f'{matriz[sub_indice][indice]:20} | '
-            elif type(matriz[sub_indice][indice]) == int:
-                texto += f'{matriz[sub_indice][indice]:03} | '
-            elif type(matriz[sub_indice][indice]) == float:
-                texto += f'{matriz[sub_indice][indice]:08.2f} | '
-        texto = texto[0:-3]
-
-        print(texto)
-
-
 def mostrar_cantidad_de_heroes_fem(matriz: list[list]) -> None:
-    mostrar_sublista(filtrar(matriz, 'genero', 'Femenino'), matriz)
+    """
+    _summary_
+    Muestra la cantidad de heroes femeninos
+    Arguments:
+        matriz -- _description_ Dataset
+    """
+    lista_femeninos = filtrar(matriz, 'genero', 'Femenino')
+    msg = f'La cantidad de heroes femeninos es: {len(lista_femeninos)}'
+    print(msg)
+    # mostrar_sublista(lista_femeninos, matriz)
+
 
 def mostrar_cantidad_de_heroes_masc(matriz: list[list]) -> None:
-    mostrar_sublista(filtrar(matriz, 'genero', 'Masculino'), matriz)
-# ____________
-#     utn_filtrar_heroes_genero, utn_mostrar_heroe_mayor_altura,
-#     utn_mostrar_heroes_mas_fuertes, utn_mostrar_identidades_heroes,
-#     utn_mostrar_nombres_heroes, utn_mostrar_heroes_poder_superior_promedio,
-#     utn_mostrar_heroes_mas_debiles
+    """
+    _summary_
+    Muestra la cantidad de heroes masculinos
+    Arguments:
+        matriz -- _description_ Dataset
+    """
+    lista_masculinos = filtrar(matriz, 'genero', 'Masculino')
+    msg = f'La cantidad de heroes masculinos es: {len(lista_masculinos)}'
+    print(msg)
+    # mostrar_sublista(lista_masculinos, matriz)
+
+
+def ordenar_heroes_alfabeticamente_ascendente(matriz):
+    """
+    _summary_
+    Muestra el dataset ordenado alfabeticamente por nombre, 
+    ascendente
+    Arguments:
+        matriz -- _description_ Dataset
+    """
+    print('Ordenados por nombre: ')
+    mostrar_todo(ordenar_heroes_alfa(matriz, 'ASC', matriz[0]))
+
+
+def ordenar_heroes_alfabeticamente_descendente(matriz):
+    """
+    _summary_
+    Muestra el dataset ordenado alfabeticamente por apode, 
+    descendente
+    Arguments:
+        matriz -- _description_ Dataset
+    """
+    print('Ordenados por apodo: ')
+    mostrar_todo(ordenar_heroes_alfa(matriz, 'ASC', matriz[2]))
+
+# --------------
+# Desafio 1 - TO DO: CLEAN
 
 
 def utn_filtrar_heroes_genero(lista_generos: list, lista_heroes: list, genero='Femenino') -> None:
@@ -57,7 +77,6 @@ def utn_mostrar_heroe_mayor_altura(lista: list, lista_nombres_heroes: list) -> N
     pos = obtener_mayor(lista)
     print(f'El heroe con mayor altura es: {
           lista_nombres_heroes[pos]}, con {lista[pos]}cm de altura')
-
 
 
 def utn_mostrar_heroes_poder_superior_promedio(lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos):
@@ -100,4 +119,3 @@ def utn_mostrar_heroes_poder_usuario(lista_nombres, lista_identidades, lista_alt
         lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos, seleccion_usuario
     )
     mostrar_todos(lista_ordenada)
-    pass
