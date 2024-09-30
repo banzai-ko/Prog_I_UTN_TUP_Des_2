@@ -1,9 +1,10 @@
 # pylint: disable=C0200
 # pylint: disable=C0123
-
 """_summary_
 Funciones auxiliares y soporte Desafio 03 App
 """
+from validaciones import validar_eleccion
+
 
 def mostrar_todo(matriz: list[list]) -> None:
     """_summary_
@@ -20,6 +21,8 @@ def mostrar_todo(matriz: list[list]) -> None:
                     texto_original = matriz[sub_indice][indice]
                     texto_saneado = texto_original[0:20]
                     texto += f'{texto_saneado} | '
+                elif sub_indice == 3:
+                    texto += f'{matriz[sub_indice][indice]:12} | '
                 else:
                     texto += f'{matriz[sub_indice][indice]:20} | '
             elif type(matriz[sub_indice][indice]) == int:
@@ -29,6 +32,7 @@ def mostrar_todo(matriz: list[list]) -> None:
         texto = texto[0:-3]
 
         print(texto)
+
 
 def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
     """
@@ -56,7 +60,7 @@ def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
         texto = ''
 
 
-def filtrar(matriz: list[list], tipo: str, valor: str) -> list:
+def buscar(matriz: list[list], tipo: str, valor: str) -> list:
     """
     _summary_
     Funcion de filtrado, busqueda por valor
@@ -92,7 +96,73 @@ def filtrar(matriz: list[list], tipo: str, valor: str) -> list:
 
     return res
 
-def ordenar_heroes_alfa(matriz: list[list], modo: str, lista: list) -> list[list]:
+
+def contar(valor: str, matriz: list) -> int:
+    """
+    _summary_ Contar elementos en una lista
+    Arguments:
+        valor -- valor a contar
+        matriz -- dataset
+    """
+    count = 0
+    apariciones = []
+    for i in range(len(matriz)):
+        if valor == matriz[i]:
+            count += 1
+            apariciones.append(i)
+    return count, apariciones
+
+
+def filtrar(
+    matriz_entrada: list[list],
+    nombre_lista_a_buscar: str,
+    modo: str,
+    valor_a: str,
+    valor_b: str = None
+) -> list:
+    """
+    _summary_
+    Filtrar elementos en una lista
+    Según el modo, devuelve una lista con los indices
+    Menor: devuelve los elementos menores al valor
+    Mayor: devuelve los elementos superiores al valor
+    Rango: devuelve los elementos dentro del rango
+    Arguments:
+        matriz -- _description_ Dataset
+        lim_inferior -- _description_ Valor minimo del rango o menor
+        lim_superior -- _description_ Valor maximo del rango o mayor
+        modo -- _description_ Opción de funcionamiento
+
+    Returns:
+        _description_ Lista de indices
+    """
+
+    nombre_lista = nombre_lista_a_buscar.lower()
+
+    if nombre_lista == 'poder':
+        lista = matriz_entrada[4]
+    elif nombre_lista == 'altura':
+        lista = matriz_entrada[5]
+
+    res = []
+
+    valor_a = int(valor_a)
+    if valor_b is not None:
+        valor_b = int(valor_b)
+    for i in range(len(lista)):
+        elemento = int(lista[i])
+
+        if modo == 'menor' and elemento < valor_a:
+            res.append(i)
+        elif modo == 'mayor' and elemento > valor_a:
+            res.append(i)
+        elif modo == 'rango' and valor_a <= elemento <= valor_b:
+            res.append(i)
+
+    return res
+
+
+def ordenar_heroes(matriz: list[list], modo: str, lista: list) -> list[list]:
     """
     _summary_
     Ordenar los elementos alfabeticamente
@@ -106,13 +176,13 @@ def ordenar_heroes_alfa(matriz: list[list], modo: str, lista: list) -> list[list
     """
 
     lista_nombres, lista_identidades, lista_apodos, \
-    lista_generos, lista_alturas, lista_poderes,  = matriz
+        lista_generos, lista_alturas, lista_poderes,  = matriz
    # Selection Sort
     for i in range(len(lista) - 1):
         indice_minimo = i
         for j in range(i + 1, len(lista)):
             if (modo == 'ASC' and lista[j] < lista[indice_minimo]) or \
-                (modo == 'DES' and lista[j] > lista[indice_minimo]):
+                    (modo == 'DES' and lista[j] > lista[indice_minimo]):
                 indice_minimo = j
 
         if indice_minimo != i:
@@ -130,121 +200,48 @@ def ordenar_heroes_alfa(matriz: list[list], modo: str, lista: list) -> list[list
     return lista_resultado
 
 
-# -------------------------------------------
-# Desafio 1. TO DO: CLEAN
-
-def calcular_promedio(lista: list) -> float:
-    sumatoria = 0
-    for i in range(len(lista)):
-        sumatoria += int(lista[i])
-    promedio = sumatoria / len(lista)
-    return promedio
-
-
-def obtener_mayor(lista: list, i=None) -> int:
-    if i is None:
-        i = len(lista) - 1
-
-    if i == 0:  # Caso Base
-        return 0
-
-    indice_mayor = obtener_mayor(lista, i - 1)  # Caso recursivo
-
-    # Comparar el valor en el índice actual con el valor almacenado
-    if lista[i] > lista[indice_mayor]:
-        return i
-    else:
-        return indice_mayor
-    lista_nombres, lista_identidades, lista_alturas, lista_poderes, lista_generos
-
-
-def ordenar_ascendente_poder(lista_nombres: list, lista_identidades: list, lista_alturas: list, lista_poderes: list, lista_generos: list) -> list[list]:
-    # BS
-    for i in range(len(lista_poderes) - 1):
-        for j in range(i + 1, len(lista_poderes)):
-            if lista_poderes[i] > lista_poderes[j]:
-                ordenar_listas(i, j, lista_poderes)
-                ordenar_listas(i, j, lista_nombres)
-                ordenar_listas(i, j, lista_identidades)
-                ordenar_listas(i, j, lista_alturas)
-                ordenar_listas(i, j, lista_generos)
-
-    lista_resultado = [lista_nombres, lista_identidades,
-                       lista_alturas, lista_poderes, lista_generos]
-
-    return lista_resultado
-
-
-def ordenar_descendente_altura(lista_resultado: list[list], lista_mas_grandes: list[list], lista_mas_chicos: list[list]) -> list[list]:
+def entrada_orden_usuario() -> str:
     """
-    Ordena los elementos de la lista_para_mostrar usando QS
-    Argumentos: Recibe una lista_para_mostrar y dos parametros auxiliares para la recursividad( ver/preguntar posible mejora)
+    _summary_ Solicitar y validar selección del usuario
+
+    Returns:
+        _description_ Devuelve la entrada del usuario, siempre que esté en la lista
     """
-    if len(lista_resultado[2]) < 2:
-        return lista_resultado
+    print('Ordenar por: ')
+    return validar_eleccion(['ASC', 'DES'])
 
-    pivot_index = len(lista_resultado[2]) - 1
-    pivot_altura = lista_resultado[2][pivot_index]
 
-    for i in range(pivot_index):
-        altura = lista_resultado[2][i]
-        if altura > pivot_altura:
-            for j in range(5):
-                lista_mas_grandes[j].append(lista_resultado[j][i])
-        else:
-            for j in range(5):
-                lista_mas_chicos[j].append(lista_resultado[j][i])
+def interseccion_listas(lista1: list, lista2: list) -> list:
+    """
+    _summary_
+    Devuelve la intersección de dos listas
+    Arguments:
+        lista1 -- _description_ Lista de indices
+        lista2 -- _description_ Lista de indices
 
-    sorted_grandes = ordenar_descendente_altura(
-        lista_mas_grandes, [[], [], [], [], []], [[], [], [], [], []])
-    sorted_chicos = ordenar_descendente_altura(
-        lista_mas_chicos, [[], [], [], [], []], [[], [], [], [], []])
-
-    pivot = [lista_resultado[j][pivot_index] for j in range(5)]
-
-    fix_sorted = [
-        sorted_grandes[0] + [pivot[0]] + sorted_chicos[0],  # Nombres
-        sorted_grandes[1] + [pivot[1]] + sorted_chicos[1],  # Identidad
-        sorted_grandes[2] + [pivot[2]] + sorted_chicos[2],  # Altura
-        sorted_grandes[3] + [pivot[3]] + sorted_chicos[3],  # Poder
-        sorted_grandes[4] + [pivot[4]] + sorted_chicos[4],  # Genero
-    ]
-
-    return fix_sorted
+    Returns:
+        _description_ Lista de indices de elementos comunes
+    """
+    interseccion = []
+    for elemento in lista1:
+        if elemento in lista2 and elemento not in interseccion:
+            interseccion.append(elemento)
+    return interseccion
 
 
 def ordenar_listas(i: int, j: int, lista_orden: list) -> list:
+    """
+    _summary_
+    Funcion auxiliar para ordenar elementos de una lista
+    Arguments:
+        i -- _description_ Indice a intercambiar
+        j -- _description_  Indice a intercambiar
+        lista_orden -- _description_ Lista a definir orden
+
+    Returns:
+        _description_
+    """
     lista_orden[i], lista_orden[j] =\
         lista_orden[j], lista_orden[i]
 
     return lista_orden
-
-
-def ordenar_poder_usuario(matriz: list[list], modo: str) -> list[list]:
-    lista_nombres, lista_identidades, lista_apodos, \
-        lista_generos, lista_alturas, lista_poderes,  = matriz
-    # Selection Sort
-    for i in range(len(lista_poderes) - 1):
-        indice_minimo = i
-        for j in range(i + 1, len(lista_poderes)):
-            if (modo == 'ASC' and lista_poderes[j] < lista_poderes[indice_minimo]) or \
-               (modo == 'DES' and lista_poderes[j] > lista_poderes[indice_minimo]):
-                indice_minimo = j
-
-        if indice_minimo != i:
-            ordenar_listas(i, indice_minimo, lista_nombres)
-            ordenar_listas(i, indice_minimo, lista_identidades)
-            ordenar_listas(i, indice_minimo, lista_apodos)
-            ordenar_listas(i, indice_minimo, lista_generos)
-            ordenar_listas(i, indice_minimo, lista_poderes)
-            ordenar_listas(i, indice_minimo, lista_alturas)
-
-    lista_resultado = [
-        lista_nombres, lista_identidades, lista_apodos,
-        lista_generos, lista_poderes, lista_alturas
-    ]
-
-    return lista_resultado
-
-
-

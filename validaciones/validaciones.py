@@ -22,14 +22,15 @@ Retorna: un entero con la entrada del usuario,
     return int(opcion)
 
 
-def validar_eleccion(posibles: list[str]):
+def validar_eleccion(posibles: list[str]) -> str:
     """_summary_
 Funcion para validar entrada del usuario
 Recibe una lista de posibles elecciones
 Retorna: un string con la entrada del usuario
 """
-    seleccion_usuario = input(f'Ingrese opcion: {posibles} ')
+    seleccion_usuario = input(f'Ingrese opcion: {posibles} ').upper()
     if seleccion_usuario not in posibles:
-        validar_eleccion(posibles)
+        print("Opción no valida, reingrese.")
+        return validar_eleccion(posibles)
 
     return seleccion_usuario
