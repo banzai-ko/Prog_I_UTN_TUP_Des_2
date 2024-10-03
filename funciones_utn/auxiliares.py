@@ -3,6 +3,7 @@
 """_summary_
 Funciones auxiliares y soporte Desafio 03 App
 """
+
 from validaciones import validar_eleccion
 
 
@@ -34,27 +35,27 @@ def mostrar_todo(matriz: list[list]) -> None:
         print(texto)
 
 
-def mostrar_sublista(indices: list, lista_para_mostrar: list[list]) -> None:
+def mostrar_sublista(indices: list, matriz_para_mostrar: list[list]) -> None:
     """
     Muestra elementos filtrados previamente
     Arguments:
         indices -- Elementos a ser mostrados (índices)
-        lista_para_mostrar -- Lista total (lista de listas)
+        matriz_para_mostrar -- Lista total (lista de listas)
     """
     texto = ''
     for i in range(len(indices)):
-        for j in range(len(lista_para_mostrar)):
-            if type(lista_para_mostrar[j][indices[i]]) == str:
-                if len(lista_para_mostrar[j][indices[i]]) > 20:
-                    texto_original = lista_para_mostrar[j][indices[i]]
+        for j in range(len(matriz_para_mostrar)):
+            if type(matriz_para_mostrar[j][indices[i]]) == str:
+                if len(matriz_para_mostrar[j][indices[i]]) > 20:
+                    texto_original = matriz_para_mostrar[j][indices[i]]
                     texto_saneado = texto_original[0:20]
                     texto += f'{texto_saneado} | '
                 else:
-                    texto += f'{lista_para_mostrar[j][indices[i]]:20} | '
-            elif type(lista_para_mostrar[j][indices[i]]) == int:
-                texto += f'{lista_para_mostrar[j][indices[i]]:03} | '
-            elif type(lista_para_mostrar[j][indices[i]]) == float:
-                texto += f'{lista_para_mostrar[j][indices[i]]:08.2f} | '
+                    texto += f'{matriz_para_mostrar[j][indices[i]]:20} | '
+            elif type(matriz_para_mostrar[j][indices[i]]) == int:
+                texto += f'{matriz_para_mostrar[j][indices[i]]:03} | '
+            elif type(matriz_para_mostrar[j][indices[i]]) == float:
+                texto += f'{matriz_para_mostrar[j][indices[i]]:08.2f} | '
         texto = texto[:-3]
         print(texto)
         texto = ''
@@ -97,7 +98,7 @@ def buscar(matriz: list[list], tipo: str, valor: str) -> list:
     return res
 
 
-def contar(valor: str, matriz: list) -> int:
+def contar(valor: str, lista: list) -> int:
     """
     _summary_ Contar elementos en una lista
     Arguments:
@@ -106,8 +107,8 @@ def contar(valor: str, matriz: list) -> int:
     """
     count = 0
     apariciones = []
-    for i in range(len(matriz)):
-        if valor == matriz[i]:
+    for i in range(len(lista)):
+        if valor == lista[i]:
             count += 1
             apariciones.append(i)
     return count, apariciones

@@ -43,7 +43,7 @@ def mostrar_cantidad_de_heroes_masc(matriz: list[list]) -> None:
 def ordenar_heroes_alfabeticamente_ascendente(matriz):
     """
     _summary_
-    Muestra el dataset ordenado alfabeticamente por nombre, 
+    Muestra el dataset ordenado alfabeticamente por nombre,
     ascendente
     Arguments:
         matriz -- _description_ Dataset
@@ -55,7 +55,7 @@ def ordenar_heroes_alfabeticamente_ascendente(matriz):
 def ordenar_heroes_alfabeticamente_descendente(matriz):
     """
     _summary_
-    Muestra el dataset ordenado alfabeticamente por apode, 
+    Muestra el dataset ordenado alfabeticamente por apodo,
     descendente
     Arguments:
         matriz -- _description_ Dataset
@@ -72,11 +72,13 @@ def ordenar_heroes_altura_usuario(matriz):
         matriz_heroes -- _description_ Dataset
     """
     entrada = entrada_orden_usuario()
-    print(entrada)
-    mostrar_todo(ordenar_heroes(matriz, entrada, matriz[5]))
+    mensaje = 'Orden: ' + ('Ascendente' if entrada == 'ASC' else 'Descendente')
+    print(mensaje)
+    heroes_ordenados = ordenar_heroes(matriz, entrada, matriz[5])
+    mostrar_todo(heroes_ordenados)
 
 
-def determinar_altura_maxima_mostrar_heroes(matriz):
+def determinar_altura_maxima_mostrar_heroes(matriz): # definido por el menu
     """
     _summary_
     Determina la altura maxima del dataset cuenta la cantidad de 
@@ -85,11 +87,15 @@ def determinar_altura_maxima_mostrar_heroes(matriz):
     Arguments:
         matriz -- _description_ Dataset
     """
-    lista_ordenada_altura = ordenar_heroes(matriz, 'DES', matriz[5])
-    print(f'La altura maxima es:  {lista_ordenada_altura[4][0]}')
-    cantidad, lista = contar(lista_ordenada_altura[4][0], matriz[5])
+    lista_ordenada_altura = ordenar_heroes(matriz, 'DES', matriz[5])  # string
+    
+    print(f'La altura maxima es:  {lista_ordenada_altura[4][0]}') # en 0 la altura máxima
+
+    cantidad, lista = contar(lista_ordenada_altura[4][0], matriz[5]) # altura mas alta, lista de alturas
+
     print(f'La cantidad de heroes con esa altura es: {cantidad}')
-    mostrar_sublista(lista, lista_ordenada_altura)
+
+    mostrar_sublista(lista, lista_ordenada_altura) # muestra la lista de heroes 
 
 
 def determinar_poder_minimo_mostrar_cant_heroes(matriz):
@@ -102,8 +108,11 @@ def determinar_poder_minimo_mostrar_cant_heroes(matriz):
         matriz -- _description_ Dataset
     """
     lista_ordenada_poder = ordenar_heroes(matriz, 'ASC', matriz[4])
+
     print(f'El poder minimo es:  {lista_ordenada_poder[5][0]}')
+
     cantidad, lista = contar(lista_ordenada_poder[5][0], matriz[4])
+    
     print(f'La cantidad de heroes con ese poder es: {cantidad}')
     mostrar_sublista(lista, lista_ordenada_poder)
 
